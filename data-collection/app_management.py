@@ -2,10 +2,11 @@ import streamlit as st
 import pandas as pd
 import json
 import os
+from flask import Flask
+import threading
 
 def BACKEND():
     app = Flask(__name__)
-
     @app.route('/new_file', methods=['GET'])
     def new_file():
         # Trả về dữ liệu dạng JSON
@@ -13,7 +14,7 @@ def BACKEND():
 
     # Chạy Flask API trong một luồng riêng biệt
     def start_flask():
-        app.run(host='0.0.0.0', port=5012)
+        app.run(host='0.0.0.0', port=8011)
 
     # Chạy Flask API trong luồng riêng
     flask_thread = threading.Thread(target=start_flask)
@@ -123,5 +124,9 @@ def FRONTEND():
                     st.experimental_rerun()
 
 if __name__ == '__main__':
-    #FRONTEND()
-    BACKEND()
+
+    FRONTEND()
+
+    if not hasattr(st, 'already_started_server'):
+        st.already_started_server = True
+        BACKEND()

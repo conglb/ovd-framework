@@ -4,7 +4,7 @@ FROM python:3.9
 WORKDIR /app
 
 # Sao chép tất cả các file trong thư mục hiện tại vào container
-COPY . /app
+#COPY . /app
 
 # Cài đặt các thư viện cần thiết
 RUN pip install --no-cache-dir streamlit pandas requests flask
