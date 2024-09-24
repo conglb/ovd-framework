@@ -1,0 +1,8 @@
+version: '3'
+services:
+  myservice:
+    image: ubuntu
+    volumes:
+      - ./data-collection/data:/root/dest1
+      - ./data-collection/runner:/root/dest2
+    tty: true
