@@ -75,22 +75,3 @@ if file_list:
                 #cleaned_df.to_csv(cleaned_file_path, index=False)
 else:
     st.warning("No files available to clean.")
-
-
-def BACKEND():
-    app = Flask(__name__)
-    @app.route('/new_file', methods=['GET'])
-    def new_file():
-        # Trả về dữ liệu dạng JSON
-        return jsonify(data.to_dict(orient='records'))
-
-    # Chạy Flask API trong một luồng riêng biệt
-    def start_flask():
-        app.run(host='0.0.0.0', port=8011)
-
-    # Chạy Flask API trong luồng riêng
-    flask_thread = threading.Thread(target=start_flask)
-    flask_thread.start()
-
-if __name__=='__main__':
-    BACKEND()

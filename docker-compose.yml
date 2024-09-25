@@ -1,8 +1,23 @@
 version: '3'
 services:
-  myservice:
-    image: ubuntu
-    volumes:
-      - ./data-collection/data:/root/dest1
-      - ./data-collection/runner:/root/dest2
-    tty: true
+  data_collection:
+    build:
+      context: ./data-collection
+    ports:
+      - "8511:8511"   # Map cổng cho Streamlit
+      - "5011:5011"   # Map cổng cho Flask
+    networks:
+      - app-network
+
+  data_cleaning:
+    build:
+      context: ./data-cleaning
+    ports:
+      - "8512:8512"   # Map cổng cho Streamlit
+      - "5012:5012"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
