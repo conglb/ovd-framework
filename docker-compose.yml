@@ -1,23 +1,73 @@
 version: '3'
 services:
   data_collection:
+    image: data-collection-image:latest
     build:
       context: ./data-collection
     ports:
       - "8511:8511"   # Map cổng cho Streamlit
-      - "5011:5011"   # Map cổng cho Flask
+      - "8011:8011"   # Map cổng cho Flask
     networks:
       - app-network
-
+    volumes:
+      - ./data:/data  # Mount the shared volume
+      - ./data-collection:/app # Mount source code
+    tty: true
+    
   data_cleaning:
+    image: data-cleaning-image:latest
     build:
       context: ./data-cleaning
     ports:
       - "8512:8512"   # Map cổng cho Streamlit
-      - "5012:5012"
+      - "8012:8012"
     networks:
       - app-network
+    volumes:
+      - ./data:/data  # Mount the shared volume
+      - ./data-cleaning:/app # Mount source code
+    tty: true
+
+  data_storage:
+    image: data-storage-image:latest
+    build:
+      context: ./data-storage
+    ports:
+      - "8513:8513"   # Map cổng cho Streamlit
+      - "8013:8013"   # Map cổng cho Flask
+    networks:
+      - app-network
+    volumes:
+      - ./data:/data  # Mount the shared volume
+      - ./data-storage:/app # Mount source code
+    tty: true
+
+  data_presentation:
+    image: data-presentation-image:latest
+    build:
+      context: ./data-presentation
+    ports:
+      - "8514:8514"   # Map cổng cho Streamlit
+      - "8014:8014"   # Map cổng cho Flask
+    networks:
+      - app-network
+    volumes:
+      - ./data:/data  # Mount the shared volume
+      - ./data-presentation:/app # Mount source code
+    tty: true
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+      - "8090:8090"
+      - "2003:2003"
+    networks:
+      - app-network
+    volumes:
+      - ./database:/var/lib/influxdb
 
 networks:
   app-network:
     driver: bridge
+

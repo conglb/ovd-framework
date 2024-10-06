@@ -1,17 +1,14 @@
 FROM python:3.9
 
-# Thiết lập thư mục làm việc trong container
+# set working directory
 WORKDIR /app
 
-# Sao chép tất cả các file trong thư mục hiện tại vào container
-#COPY . /app
-
-# Cài đặt các thư viện cần thiết
+# install packages
 RUN pip install --no-cache-dir streamlit pandas requests flask
 
-# Expose cổng 8501 cho Streamlit
-EXPOSE 5011
+# Expose 8511 for Streamlit, 8011 for API
+EXPOSE 8011
 EXPOSE 8511
 
-# Chạy Streamlit
+# Run Streamlit
 CMD ["streamlit", "run", "app_management.py", "--server.port=8511"]

@@ -6,11 +6,11 @@ WORKDIR /app
 # Sao chép tất cả các file trong thư mục hiện tại vào container
 
 # Cài đặt các thư viện cần thiết
-RUN pip install --no-cache-dir streamlit pandas requests flask
+RUN pip install --no-cache-dir streamlit pandas requests flask influxdb-client
 
 # Expose cổng 8501 cho Streamlit
-EXPOSE 8012
-EXPOSE 8512
+EXPOSE 8014
+EXPOSE 8514
 
 # Chạy Streamlit
-CMD ["streamlit", "run", "app_management.py", "--server.port=8512"]
+CMD ["streamlit", "run", "app_visualize_ais_data.py", "--server.port=8514"]

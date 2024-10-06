@@ -1,7 +1,7 @@
 import os
 import json
 
-DATA_SOURCES_FILE = 'data_sources.json'
+DATA_SOURCES_FILE = '../data/data_sources.json'
 
 # Load data sources from JSON file
 def load_data_sources():
@@ -42,3 +42,13 @@ def edit_data_source(index, name, url, description):
             "description": description
         }
     save_data_sources(data_sources)
+
+# Function to list all files and sub-files in a directory
+def list_files_in_directory(directory):
+    file_structure = {}
+    for root, dirs, files in os.walk(directory):
+        folder_name = os.path.relpath(root, directory)
+        if folder_name == ".":
+            folder_name = "raw_files"
+        file_structure[folder_name] = files + dirs
+    return file_structure
