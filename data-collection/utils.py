@@ -2,6 +2,7 @@ import os
 import json
 
 DATA_SOURCES_FILE = '../data/data_sources.json'
+SCRIPT_FILES_DIR = "./collecting_scripts"
 
 # Load data sources from JSON file
 def load_data_sources():
@@ -15,13 +16,20 @@ def save_data_sources(data_sources):
     with open(DATA_SOURCES_FILE, 'w') as f:
         json.dump(data_sources, f, indent=4)
 
+def get_collecting_script_list():
+    return [x for x in os.listdir(SCRIPT_FILES_DIR) if x.endswith('.py')]
+
 # Add a new data source
-def add_data_source(name, url, description):
+def add_data_source(name, data_category, url, description, file_format, collecting_script, collecting_frequency):
     data_sources = load_data_sources()
     data_sources.append({
         "name": name,
+        'data_category': data_category,
         "url": url,
-        "description": description
+        "description": description,
+        'file_format': file_format,
+        'collecting_script': collecting_script,
+        'collecting_frequency': collecting_frequency
     })
     save_data_sources(data_sources)
 

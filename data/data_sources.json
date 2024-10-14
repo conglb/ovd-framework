@@ -1,27 +1,11 @@
 [
     {
-        "name": "[AIS Hub] csv",
-        "url": "sdf",
-        "description": "sdfsdfsdf"
-    },
-    {
-        "name": "test000",
-        "url": "123",
-        "description": "231"
-    },
-    {
-        "name": "test trang m",
-        "url": "sldkfj",
-        "description": "lkfjlskdf"
-    },
-    {
-        "name": "aaa",
-        "url": "dfjk",
-        "description": "sdflkj"
-    },
-    {
-        "name": "que01",
-        "url": "dlkfj",
-        "description": "ldkfj"
+        "name": "AIShub",
+        "data_category": "AIS data",
+        "url": "http://data.aishub.net/ws.php?username=AH_TRIAL_7EBC4392&format=1&output=csv&compress=0",
+        "description": "Download AIS data from AISHub.com every hour automatically .",
+        "file_format": "CSV",
+        "collecting_script": "s1.py",
+        "collecting_frequency": "Hourly"
     }
 ]
