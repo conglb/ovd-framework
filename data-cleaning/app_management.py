@@ -43,6 +43,16 @@ def run_cleaning_script(script_name, raw_file_path, output_file_path):
         return None
 
 # Streamlit App
+st.set_page_config(
+        page_title="Data Cleaning Module",
+        page_icon="🧊",
+        layout="wide",
+        initial_sidebar_state="expanded",
+        menu_items={
+            'Get Help': 'https://github.com/conglb',
+            'Report a bug': "https://github.com/conglb",
+        }
+    )
 st.markdown("[1. Data Collection Module](http://localhost:8501) &emsp; &emsp; [2. Data Cleaning Module] &emsp; &emsp; [3. Data Storage Module](http://localhost:8503) &emsp; &emsp; [4. Data Presentation Module](http://localhost:8504)")
 st.title("Data Cleaning Module")
 

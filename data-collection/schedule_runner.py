@@ -3,39 +3,55 @@ import subprocess
 import time
 import os
 from datetime import datetime
+import json
 
-# Đường dẫn tới các file download và logs
+# File paths for logs
 download_log_file = "downloaded_files.log"
 error_log_file = "error_log.log"
+DATA_SOURCES_FILE = '../data/data_sources.json'
+SCRIPT_FILES_DIR = "./collecting_scripts"
 
-# Hàm ghi log file download
+# Log file download
 def log_download(file_path):
     with open(download_log_file, "a") as f:
-        f.write(f"{datetime.now()}: {file_path}\n")
+        f.write(f"{datetime.now()}: collected a new file at {file_path}\n")
 
-# Hàm ghi log lỗi
+# Log file download error
 def log_error(task_name, error_msg):
     with open(error_log_file, "a") as f:
         f.write(f"{datetime.now()} - {task_name} - ERROR: {error_msg}\n")
 
+# Load data sources from JSON configuration
+def load_data_sources():
+    if os.path.exists(DATA_SOURCES_FILE):
+        with open(DATA_SOURCES_FILE, 'r') as f:
+            return json.load(f)
+    return []
+
 # Task 1: Chạy file T1.py
-def task_1():
+def run_task(task_name, script_url):
     try:
-        result = subprocess.run(["python3", "T1.py"], capture_output=True, text=True)
+        if script_url.endswith(".py"):
+            result = subprocess.run(["python3", script_url], capture_output=True, text=True)
+        elif script_url.endswith(".sh"):
+            result = subprocess.run(["bash", script_url], capture_output=True, text=True)
+        else:
+            log_error(task_name, f"Unsupported script type: {script_url}")
+            return 0
         if result.returncode == 0:
-            print("Task 1 completed successfully.")
+            print(f"Collect data from {task_name} completed successfully.")
             downloaded_files = result.stdout.strip().split("\n")  # Giả sử file được download list trong stdout
             for file in downloaded_files:
                 log_download(file)
         else:
-            log_error("Task 1", result.stderr)
+            log_error(task_name, result.stderr)
     except Exception as e:
-        log_error("Task 1", str(e))
+        log_error(task_name, str(e))
 
 # Task 2: Chạy file T2.sh
 def task_2():
     try:
-        result = subprocess.run(["bash", "./runner/aishub.com.sh"], capture_output=True, text=True)
+        result = subprocess.run(["bash", "./collecting_scripts/aishub.com.sh"], capture_output=True, text=True)
         if result.returncode == 0:
             print("Task 2 completed successfully.")
             downloaded_files = result.stdout.strip().split("\n")  # Giả sử file được download list trong stdout
@@ -63,8 +79,27 @@ def task_3():
 # Lên lịch các tasks tuần tự
 def schedule_tasks():
     print("Scheduling tasks...")
-    #schedule.every().hour.at(":00").do(task_1)  # Chạy Task 1 đầu giờ
-    schedule.every().hour.at(":18").do(task_2)  # Chạy Task 2 vào 20 phút
+    data_sources = load_data_sources()
+
+    for source in data_sources:
+        task_name = source.get("name", "Unnamed Task")
+        collecting_script = source.get("collecting_script")
+        script_url = SCRIPT_FILES_DIR + '/' + collecting_script
+        collecting_frequency = source.get("collecting_frequency")
+        schedule_time = source.get("schedule_time", ":49")
+
+        if not script_url or not collecting_frequency:
+            log_error(task_name, "skipped this data source")
+            continue
+
+        if collecting_frequency == "Hourly":
+            schedule.every().hour.at(schedule_time).do(run_task, task_name=task_name, script_url=script_url)
+        elif collecting_frequency == "Daily":
+            schedule.every().day.at(schedule_time).do(run_task, task_name=task_name, script_url=script_url)
+        elif collecting_frequency == "Weekly":
+            schedule.every().week.at(schedule_time).do(run_task, task_name=task_name, script_url=script_url)
+    
+    #schedule.every().hour.at(":49").do(task_2)  # Chạy Task 2 vào 20 phút
     #schedule.every().hour.at(":40").do(task_3)  # Chạy Task 3 vào 40 phút
 
 # Vòng lặp chính để chạy tasks tuần tự
@@ -83,3 +118,5 @@ if __name__ == "__main__":
     while True:
         schedule.run_pending()
         time.sleep(1)
+
+

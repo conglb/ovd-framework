@@ -5,7 +5,7 @@
         "url": "http://data.aishub.net/ws.php?username=AH_TRIAL_7EBC4392&format=1&output=csv&compress=0",
         "description": "Download AIS data from AISHub.com every hour automatically .",
         "file_format": "CSV",
-        "collecting_script": "s1.py",
+        "collecting_script": "aishub.com.sh",
         "collecting_frequency": "Hourly"
     }
 ]
