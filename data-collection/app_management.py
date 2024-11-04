@@ -6,11 +6,13 @@ from flask import Flask
 import threading
 from api import BACKEND
 from utils import list_files_in_directory
-from st_pages
+
 
 
 # Giao diện Streamlit chính
 def FRONTEND():
+    
+
     st.set_page_config(
         page_title="Data Collection Module",
         page_icon="🧊",
@@ -21,9 +23,13 @@ def FRONTEND():
             'Report a bug': "https://github.com/conglb",
         }
     )
-    st.markdown("[1. Data Collection Module] &emsp; &emsp; [2. Data Cleaning Module](http://localhost:8502) &emsp; &emsp; [3. Data Storage Module](http://localhost:8503) &emsp; &emsp; [4. Data Presentation Module](http://localhost:8504)")
+    st.markdown("[1. Data Collection Module] &emsp; &emsp; [2. Data Cleaning Module](http://localhost:8512) &emsp; &emsp; [3. Data Storage Module](http://localhost:8513) &emsp; &emsp; [4. Data Presentation Module](http://localhost:8514)")
 
     st.title("Data Collection Module")
+
+    def local_css(file_name):
+        with open(file_name) as f:
+            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)     
     local_css("style.css")
 
     # Statistics
@@ -67,18 +73,28 @@ def FRONTEND():
         Data Size
         </div>
     </div>
-    </div>"""
+    </div> <br><br><br>"""
     st.markdown(table_scorecard, unsafe_allow_html=True)
 
     # Listing files in folder raw_files
+    col1, col2, col3 = st.columns(3)
     file_structure = list_files_in_directory('../data/raw_files')
-    for folder, files in file_structure.items():
-        with st.expander(f"Folder: {folder}", expanded=True):
-            if files:
-                for file in files:
-                    st.write(file)
-            else:
-                st.write("No files found in this folder.")
+    for index, (folder, files) in enumerate(file_structure.items()):
+        tmp = index%3
+        if tmp == 0:
+            col = col1
+        elif tmp ==1:
+            col = col2
+        else:
+            col = col3
+
+        with col:
+            with st.expander(f"Folder: {folder} \n Number of files:", expanded=False):
+                if files:
+                    for file in files:
+                        st.write(file)
+                else:
+                    st.write("No files found in this folder.")
 
     
 if __name__ == '__main__':

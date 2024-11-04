@@ -53,7 +53,7 @@ st.set_page_config(
             'Report a bug': "https://github.com/conglb",
         }
     )
-st.markdown("[1. Data Collection Module](http://localhost:8501) &emsp; &emsp; [2. Data Cleaning Module] &emsp; &emsp; [3. Data Storage Module](http://localhost:8503) &emsp; &emsp; [4. Data Presentation Module](http://localhost:8504)")
+st.markdown("[1. Data Collection Module](http://localhost:8511) &emsp; &emsp; [2. Data Cleaning Module] &emsp; &emsp; [3. Data Storage Module](http://localhost:8513) &emsp; &emsp; [4. Data Presentation Module](http://localhost:8514)")
 st.title("Data Cleaning Module")
 
 # Lấy danh sách các file dữ liệu
