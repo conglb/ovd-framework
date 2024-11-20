@@ -1,6 +1,0 @@
-streamlit
-plotly 
-pandas 
-requests 
-flask 
-influxdb-client

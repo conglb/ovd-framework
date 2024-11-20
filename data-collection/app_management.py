@@ -73,7 +73,8 @@ def FRONTEND():
         Data Size
         </div>
     </div>
-    </div> <br><br><br>"""
+    </div>"""
+    table_scorecard += """<br><br><br>"""
     st.markdown(table_scorecard, unsafe_allow_html=True)
 
     # Listing files in folder raw_files
@@ -89,12 +90,16 @@ def FRONTEND():
             col = col3
 
         with col:
-            with st.expander(f"Folder: {folder} \n Number of files:", expanded=False):
+            with st.expander(f"Folder: {folder} \n\n Path: /data/raw_files/{folder} \n\n Number of files: {len(files)} \n\n Status: Active \n\n ", expanded=False):
                 if files:
                     for file in files:
                         st.write(file)
                 else:
                     st.write("No files found in this folder.")
+    
+    with st.expander("Collecting log:", expanded=False):
+        with open('downloaded_files.log', "r") as f:
+            st.write(f.read())
 
     
 if __name__ == '__main__':

@@ -56,7 +56,5 @@ def list_files_in_directory(directory):
     file_structure = {}
     for root, dirs, files in os.walk(directory):
         folder_name = os.path.relpath(root, directory)
-        if folder_name == ".":
-            folder_name = "raw_files"
         file_structure[folder_name] = files + dirs
     return file_structure
