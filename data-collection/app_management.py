@@ -12,7 +12,6 @@ from utils import list_files_in_directory
 # Giao diện Streamlit chính
 def FRONTEND():
     
-
     st.set_page_config(
         page_title="Data Collection Module",
         page_icon="🧊",
@@ -23,13 +22,16 @@ def FRONTEND():
             'Report a bug': "https://github.com/conglb",
         }
     )
-    st.markdown("[1. Data Collection Module] &emsp; &emsp; [2. Data Cleaning Module](http://localhost:8512) &emsp; &emsp; [3. Data Storage Module](http://localhost:8513) &emsp; &emsp; [4. Data Presentation Module](http://localhost:8514)")
 
-    st.title("Data Collection Module")
+    st.markdown("##### [1. Data Collection Module] &emsp; &emsp; [2. Data Cleaning Module](http://localhost:8512) &emsp; &emsp; [3. Data Storage Module](http://localhost:8513) &emsp; &emsp; [4. Data Presentation Module](http://localhost:8514)")
+    st.markdown("""""", unsafe_allow_html=True)
 
+    def remote_css(url):
+        st.markdown(f'<link href="{url}" rel="stylesheet">',
+                    unsafe_allow_html=True)
     def local_css(file_name):
         with open(file_name) as f:
-            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)     
+            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)    
     local_css("style.css")
 
     # Statistics
@@ -97,15 +99,25 @@ def FRONTEND():
                 else:
                     st.write("No files found in this folder.")
     
-    with st.expander("Collecting log:", expanded=False):
-        with open('downloaded_files.log', "r") as f:
-            st.write(f.read())
+    # Show logs
+    st.markdown('##### Logs')
+    col1, col2 = st.columns(2)
+    with col2:
+        with st.expander("Error log:", expanded=False):
+            with open('error_log.log', "r") as f:
+                st.write(f.read())
+    with col1:
+        with st.expander("Collecting history:", expanded=False):
+            with open('downloaded_files.log', "r") as f:
+                st.write(f.read())
 
     
 if __name__ == '__main__':
 
     FRONTEND()
 
+    """
     if not hasattr(st, 'already_started_server'):
         st.already_started_server = True
         BACKEND()
+    """
