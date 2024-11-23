@@ -4,28 +4,9 @@ import os
 from os.path import join, isdir
 import subprocess
 import concurrent.futures
+from utlis import get_file_list, get_folder_list, get_cleaning_scripts, SCRIPT_FILES_DIR, CLEANED_FILES_DIR, RAW_FILES_DIR
 
-# Thư mục lưu file chưa làm sạch và đã làm sạch
-RAW_FILES_DIR = "../data/raw_files"
-CLEANED_FILES_DIR = "../data/cleaned_files"
-SCRIPT_FILES_DIR = "./cleaning_scripts"
 
-# Tạo các thư mục nếu chưa có
-os.makedirs(CLEANED_FILES_DIR, exist_ok=True)
-
-# Hàm lấy danh sách các file dữ liệu thô
-def get_file_list(path):
-    files = [x for x in os.listdir(path) if x.endswith('.csv')]
-    return files
-
-def get_folder_list(path):
-    folders = [x for x in os.listdir(path) if isdir(join(path,x))]
-    return folders
-
-# Hàm lấy danh sách các script làm sạch
-def get_cleaning_scripts():
-    scripts = [f for f in os.listdir(SCRIPT_FILES_DIR) if f.endswith('.py')]
-    return scripts
 
 # Hàm chạy script làm sạch với subprocess
 def run_cleaning_script(script_name, raw_file_path, output_file_path):
@@ -42,6 +23,11 @@ def run_cleaning_script(script_name, raw_file_path, output_file_path):
         st.error(f"Error running script: {e}")
         return None
 
+def show_dataframe(df):
+    st.write("Number of columns: {}".format(len(df.columns)))
+    st.write("Number of rows: {}".format(len(df)))
+    st.dataframe(df)
+
 # Streamlit App
 st.set_page_config(
         page_title="Data Cleaning Module",
@@ -53,11 +39,11 @@ st.set_page_config(
             'Report a bug': "https://github.com/conglb",
         }
     )
-st.markdown("[1. Data Collection Module](http://localhost:8511) &emsp; &emsp; [2. Data Cleaning Module] &emsp; &emsp; [3. Data Storage Module](http://localhost:8513) &emsp; &emsp; [4. Data Presentation Module](http://localhost:8514)")
-st.title("Data Cleaning Module")
+st.markdown("##### 1. [Data Collection Module](http://localhost:8511) &emsp; &emsp; [2. Data Cleaning Module] &emsp; &emsp; [3. Data Storage Module](http://localhost:8513) &emsp; &emsp; [4. Data Presentation Module](http://localhost:8514)")
+
 
 # Lấy danh sách các file dữ liệu
-st.sidebar.header("Select a File and Cleaning Script")
+st.sidebar.header("Clean data")
 
 folder_list = get_folder_list(RAW_FILES_DIR)
 selected_folder = st.sidebar.selectbox("Choose a folder", folder_list)
@@ -65,6 +51,12 @@ if selected_folder:
     file_list = get_file_list(os.path.join(RAW_FILES_DIR, selected_folder))
     if file_list:
         selected_file = st.sidebar.selectbox("Choose a file to clean", file_list)
+        raw_file_path = os.path.join(RAW_FILES_DIR,selected_folder, selected_file)
+
+        if selected_file:
+            df = pd.read_csv(raw_file_path)
+            st.markdown('#### Raw data')
+            show_dataframe(df)
 
         # Lấy danh sách các script làm sạch
         script_list = get_cleaning_scripts()
@@ -78,8 +70,6 @@ if selected_folder:
             # Create folder if not exists 
             output_dir_path = join(CLEANED_FILES_DIR, selected_folder)
             os.makedirs(output_dir_path, exist_ok=True)
-
-            raw_file_path = os.path.join(RAW_FILES_DIR,selected_folder, selected_file)
             output_file_path = join(CLEANED_FILES_DIR, selected_folder, f"cleaned_{selected_file}")
 
             # Sử dụng ThreadPoolExecutor để thực hiện việc chạy script trong nền

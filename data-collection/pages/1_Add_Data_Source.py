@@ -9,7 +9,7 @@ data_category = st.selectbox("Category", ['AIS data', 'High frequency data', 'Mi
 url = st.text_input("Source URL")
 description = st.text_area("Source Description")
 file_format = st.selectbox("File format", ['XML', 'API', 'HTTP', 'FTP', 'CSV', 'Path'])
-collecting_script = st.selectbox("Collecting script", get_collecting_script_list)
+collecting_script = st.selectbox("Collecting script", get_collecting_script_list())
 collecting_frequency = st.selectbox("Collecting frequency", ['Hourly', 'Daily', 'Weekly', 'Monthly'])
 
 # Add the data source when the button is clicked

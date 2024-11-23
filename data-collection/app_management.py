@@ -5,7 +5,7 @@ import os
 from flask import Flask
 import threading
 from api import BACKEND
-from utils import list_files_in_directory
+from utils import list_files_in_directory, load_data_sources
 
 
 
@@ -41,21 +41,21 @@ def FRONTEND():
         <div class="value">"""+"34"+"""
         </div>
         <div class="grey label">
-        Tables
+        Data Sources
         </div>
     </div>
         <div class="grey statistic">
             <div class="value">"""+"234"+"""
             </div>
             <div class="label">
-            Views
+            Data Folders
             </div>
         </div>
         <div class="grey statistic">
             <div class="value">"""+"34"+"""
             </div>
             <div class="label">
-            Materialized Views
+            Active Data Sources
             </div>
         </div>    
     <div class="grey statistic">
@@ -63,7 +63,7 @@ def FRONTEND():
         """+"34"+"""
         </div>
         <div class="label">
-        Rows
+        Data Collecting Scripts
         </div>
     </div>
 
@@ -78,6 +78,23 @@ def FRONTEND():
     </div>"""
     table_scorecard += """<br><br><br>"""
     st.markdown(table_scorecard, unsafe_allow_html=True)
+
+    # Listing data sources
+    col1, col2, col3 = st.columns(3)
+    for index, data_source in enumerate(load_data_sources()):
+        tmp = index%3
+        if tmp == 0:
+            col = col1
+        elif tmp == 1:
+            col = col2
+        else:
+            col = col3
+        
+        with col:
+            if 'status' in data_source and data_source['status']:
+                st.sucess('abcd')
+            else:
+                st.warning('abcdd')
 
     # Listing files in folder raw_files
     col1, col2, col3 = st.columns(3)
@@ -109,7 +126,7 @@ def FRONTEND():
     with col1:
         with st.expander("Collecting history:", expanded=False):
             with open('downloaded_files.log', "r") as f:
-                st.write(f.read())
+                st.write(list(f)[:-10])
 
     
 if __name__ == '__main__':
