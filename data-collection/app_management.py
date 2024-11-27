@@ -92,9 +92,10 @@ def FRONTEND():
         
         with col:
             if 'status' in data_source and data_source['status']:
-                st.sucess('abcd')
+                st.sucess('''abcd  efkjf  fj  dkjf  dkfje''')
             else:
-                st.warning('abcdd')
+                st.warning('''abcd    efkjf     fj  dkjf  dkfje''')
+                st.warning('abcdd \n\n dfkdfddfj \n dfk \n k')
 
     # Listing files in folder raw_files
     col1, col2, col3 = st.columns(3)
@@ -128,13 +129,8 @@ def FRONTEND():
             with open('downloaded_files.log', "r") as f:
                 st.write(list(f)[:-10])
 
-    
 if __name__ == '__main__':
 
     FRONTEND()
 
-    """
-    if not hasattr(st, 'already_started_server'):
-        st.already_started_server = True
-        BACKEND()
-    """
+   

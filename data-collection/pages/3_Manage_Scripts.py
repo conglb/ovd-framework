@@ -7,7 +7,7 @@ from os.path import join
 
 st.title("Manage Data Collecting Scripts")
 
-def read_script_file(path='./examples/collecting_script_template.py'):
+def read_script_file(path='./collecting_scripts/examples/collecting_script_template.py'):
     with open(path) as f:
         return f.read()
     return "error reading template file"
@@ -20,12 +20,11 @@ def run_collecting_script(script_name, extension, output_file_path):
             if output:
                 return {'status': 1, 'message': output}
             else:
-                return {'status':0, 'message':output}
+                return {'status':0, 'message': output}
     except subprocess.CalledProcessError as e:
         return {'status':0, 'message':e}
 
 
-@st.fragment
 def build_Main_UI():
     col1, col2, col3 = st.columns(3)
     with col1: 
@@ -36,7 +35,7 @@ def build_Main_UI():
         clickRun = st.button("Run")
 
     if function == 'Create a new script':
-        script_path = './examples/collecting_script_template.py'
+        script_path = './collecting_scripts/examples/collecting_script_template.py'
         with col3: 
             script_name = st.text_input('File name:')
     else:
@@ -64,7 +63,8 @@ def build_Main_UI():
                 result = future.result() 
 
                 if result['status']:
-                    st.success(f"File runned successfully \n\n Output: {result['message']}.")
+                    st.success(f"File runned successfully")
+                    st.write(f"Output: {result['message']}")
                 else:
                     st.error(f"File runned with error \n\n Error: {result['message']}.")
 
