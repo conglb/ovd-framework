@@ -1,5 +1,7 @@
 import os
 import json
+import datetime
+from json import dumps
 
 DATA_SOURCES_FILE = '../data/data_sources.json'
 SCRIPT_FILES_DIR = "./collecting_scripts"
@@ -16,8 +18,9 @@ def save_data_sources(data_sources):
     with open(DATA_SOURCES_FILE, 'w') as f:
         json.dump(data_sources, f, indent=4)
 
+# Return a list of script names
 def get_collecting_script_list():
-    return [x for x in os.listdir(SCRIPT_FILES_DIR) if x.endswith('.py')]
+    return [x for x in os.listdir(SCRIPT_FILES_DIR) if x.endswith(('.py', '.sh'))]
 
 # Add a new data source
 def add_data_source(name, data_category, url, description, file_format, collecting_script, collecting_frequency):
@@ -29,7 +32,10 @@ def add_data_source(name, data_category, url, description, file_format, collecti
         "description": description,
         'file_format': file_format,
         'collecting_script': collecting_script,
-        'collecting_frequency': collecting_frequency
+        'collecting_frequency': collecting_frequency,
+        'last_collected_time': 'not collected',
+        'when_created': dumps(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+        'status': 'active'
     })
     save_data_sources(data_sources)
 
@@ -49,6 +55,20 @@ def edit_data_source(index, name, url, description):
             "url": url,
             "description": description
         }
+    save_data_sources(data_sources)
+
+# Deactivate a data source
+def deactivate_data_source(index):
+    data_sources = load_data_sources()
+    if 0 <= index < len(data_sources):
+        data_sources[index]["status"] = 'inactive'
+    save_data_sources(data_sources)
+
+# Activate a data source
+def activate_data_source(index):
+    data_sources = load_data_sources()
+    if 0 <= index < len(data_sources):
+        data_sources[index]["status"] = 'active'
     save_data_sources(data_sources)
 
 # Function to list all files and sub-files in a directory

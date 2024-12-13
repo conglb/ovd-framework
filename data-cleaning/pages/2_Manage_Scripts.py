@@ -26,30 +26,37 @@ def run_collecting_script(script_name, extension, output_file_path):
 
 
 def build_Main_UI():
+    
     col1, col2, col3 = st.columns(3)
     with col1: 
-        function = st.radio("",["Create a new script", "Edit a script", "Run a script"],)
+        function = st.radio("Execute:",["Create a new script", "Edit a script", "Run a script"],)
 
-    with col2:
+
+    with col3:
         extension = st.radio("Choose program language", ["Python", "Bash"])
         clickRun = st.button("Run")
+        if extension == 'Python':
+            lastName = '.py'
+        else:
+            lastName = '.sh'
 
     if function == 'Create a new script':
         script_path = './cleaning_scripts/examples/template.py'
-        with col3: 
+        with col2: 
             script_name = st.text_input('File name:')
     else:
-        with col3:
-            script_name = st.selectbox('Choose the script', options=get_collecting_script_list())
+        with col2:
+            script_name = st.selectbox('Choose the script', options=get_cleaning_scripts())
             script_path = SCRIPT_FILES_DIR + '/' + script_name
     content = st_monaco(value=read_script_file(script_path), height="600px", language="python")
 
-    with col3:
+    with col2:
         if st.button("Save"):
             if script_name:
-                script_path = SCRIPT_FILES_DIR + '/' + script_name
+                script_path = SCRIPT_FILES_DIR + script_name + lastName
                 with open(script_path, "w") as file:
                     file.write(content)
+                    st.success(f"Saved script sucessfully to {script_path}")
             else:
                 with st.sidebar:
                     st.error("Please fill in name for new script")

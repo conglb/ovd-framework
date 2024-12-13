@@ -28,7 +28,7 @@ def run_collecting_script(script_name, extension, output_file_path):
 def build_Main_UI():
     col1, col2, col3 = st.columns(3)
     with col1: 
-        function = st.radio("",["Create a new script", "Edit a script", "Run a script"],)
+        function = st.radio("Execute:",["Create a new script", "Edit a script", "Run a script"],)
 
     with col2:
         extension = st.radio("Choose program language", ["Python", "Bash"])

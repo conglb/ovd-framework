@@ -1,0 +1,26 @@
+[
+    {
+        "name": "test05",
+        "data_category": "AIS data",
+        "url": "a",
+        "description": "a",
+        "file_format": "XML",
+        "collecting_script": "_draft.py",
+        "collecting_frequency": "Hourly",
+        "last_collected_time": "not collected",
+        "when_created": "\"2024-11-28 11:47:15\"",
+        "status": "inactive"
+    },
+    {
+        "name": "tes01",
+        "data_category": "AIS data",
+        "url": "s",
+        "description": "s",
+        "file_format": "XML",
+        "collecting_script": "_draft.py",
+        "collecting_frequency": "Hourly",
+        "last_collected_time": "not collected",
+        "when_created": "\"2024-11-28 12:01:29\"",
+        "status": "active"
+    }
+]

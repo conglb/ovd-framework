@@ -6,7 +6,16 @@ from flask import Flask
 import threading
 from api import BACKEND
 from utils import list_files_in_directory, load_data_sources
+from st_aggrid import AgGrid, GridOptionsBuilder
 
+def print_dataframe(df):
+    # Map 'Status' column to icons
+    def status_to_dot(status):
+        return " \t\t    	✅" if status == 'active' else " \t\t     ⛔"
+
+    df['status'] = df['status'].apply(status_to_dot)
+    #df = df[['collecting_frequency', 'name', 'data_category', 'status']]
+    st.dataframe(df,use_container_width=True)
 
 
 # Giao diện Streamlit chính
@@ -76,27 +85,16 @@ def FRONTEND():
         </div>
     </div>
     </div>"""
-    table_scorecard += """<br><br><br>"""
+    table_scorecard += """<br><br>"""
     st.markdown(table_scorecard, unsafe_allow_html=True)
 
-    # Listing data sources
-    col1, col2, col3 = st.columns(3)
-    for index, data_source in enumerate(load_data_sources()):
-        tmp = index%3
-        if tmp == 0:
-            col = col1
-        elif tmp == 1:
-            col = col2
-        else:
-            col = col3
-        
-        with col:
-            if 'status' in data_source and data_source['status']:
-                st.sucess('abcd')
-            else:
-                st.warning('abcdd')
+    data_sources = load_data_sources()
+    df = pd.DataFrame(data_sources)
+    print_dataframe(df)
+
 
     # Listing files in folder raw_files
+    st.markdown('###### Raw data')
     col1, col2, col3 = st.columns(3)
     file_structure = list_files_in_directory('../data/raw_files')
     for index, (folder, files) in enumerate(file_structure.items()):
@@ -109,7 +107,7 @@ def FRONTEND():
             col = col3
 
         with col:
-            with st.expander(f"Folder: {folder} \n\n Path: /data/raw_files/{folder} \n\n Number of files: {len(files)} \n\n Status: Active \n\n ", expanded=False):
+            with st.expander(f"Folder: {folder} \n\n Path: /data/raw_files/{folder} \n\n Number of files: {len(files)} \n\n  ", expanded=False):
                 if files:
                     for file in files:
                         st.write(file)
@@ -117,14 +115,15 @@ def FRONTEND():
                     st.write("No files found in this folder.")
     
     # Show logs
-    st.markdown('##### Logs')
     col1, col2 = st.columns(2)
-    with col2:
-        with st.expander("Error log:", expanded=False):
+    with col1:
+        st.markdown('###### Logs')
+    with st.container(height=320):
+        tab1, tab2 = st.tabs(["Error", "Stdout"])
+        with tab1:
             with open('error_log.log', "r") as f:
                 st.write(f.read())
-    with col1:
-        with st.expander("Collecting history:", expanded=False):
+        with tab2:
             with open('downloaded_files.log', "r") as f:
                 st.write(list(f)[:-10])
 
@@ -133,8 +132,4 @@ if __name__ == '__main__':
 
     FRONTEND()
 
-    """
-    if not hasattr(st, 'already_started_server'):
-        st.already_started_server = True
-        BACKEND()
-    """
+

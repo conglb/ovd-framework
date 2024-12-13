@@ -3,9 +3,9 @@ from os.path import join, isdir
 
 
 # Thư mục lưu file chưa làm sạch và đã làm sạch
-RAW_FILES_DIR = "../data/raw_files"
-CLEANED_FILES_DIR = "../data/cleaned_files"
-SCRIPT_FILES_DIR = "./cleaning_scripts"
+RAW_FILES_DIR = "../data/raw_files/"
+CLEANED_FILES_DIR = "../data/cleaned_files/"
+SCRIPT_FILES_DIR = "./cleaning_scripts/"
 
 # Tạo các thư mục nếu chưa có
 os.makedirs(CLEANED_FILES_DIR, exist_ok=True)
