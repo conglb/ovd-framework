@@ -13,4 +13,4 @@ EXPOSE 8012
 EXPOSE 8512
 
 # Chạy Streamlit
-CMD ["streamlit", "run", "app_management.py", "--server.port=8512"]
+CMD ["streamlit", "run", "Module_Management.py", "--server.port=8512"]

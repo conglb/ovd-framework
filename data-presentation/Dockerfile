@@ -13,4 +13,4 @@ EXPOSE 8014
 EXPOSE 8514
 
 # Chạy Streamlit
-CMD ["streamlit", "run", "app_visualize_ais_data.py", "--server.port=8514"]
+CMD ["streamlit", "run", "Module_Management.py", "--server.port=8514"]
