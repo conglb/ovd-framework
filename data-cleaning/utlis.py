@@ -23,3 +23,11 @@ def get_folder_list(path):
 def get_cleaning_scripts():
     scripts = [f for f in os.listdir(SCRIPT_FILES_DIR) if f.endswith('.py')]
     return scripts
+
+# Function to list all files and sub-files in a directory
+def list_files_in_directory(directory):
+    file_structure = {}
+    for root, dirs, files in os.walk(directory):
+        folder_name = os.path.relpath(root, directory)
+        file_structure[folder_name] = files + dirs
+    return file_structure

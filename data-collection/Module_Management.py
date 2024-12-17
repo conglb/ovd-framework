@@ -14,7 +14,7 @@ def print_dataframe(df):
         return " \t\t    	✅" if status == 'active' else " \t\t     ⛔"
 
     df['status'] = df['status'].apply(status_to_dot)
-    #df = df[['collecting_frequency', 'name', 'data_category', 'status']]
+    df = df[['name', 'data_category', 'description', 'collecting_script', 'collecting_frequency', 'last_collected_time', 'when_created', 'status']]
     st.dataframe(df,use_container_width=True)
 
 
@@ -47,21 +47,21 @@ def FRONTEND():
     table_scorecard = """
     <div class="ui five small statistics">
     <div class="grey statistic">
-        <div class="value">"""+"34"+"""
+        <div class="value">"""+"2"+"""
         </div>
         <div class="grey label">
         Data Sources
         </div>
     </div>
         <div class="grey statistic">
-            <div class="value">"""+"234"+"""
+            <div class="value">"""+"2"+"""
             </div>
             <div class="label">
             Data Folders
             </div>
         </div>
         <div class="grey statistic">
-            <div class="value">"""+"34"+"""
+            <div class="value">"""+"1"+"""
             </div>
             <div class="label">
             Active Data Sources
@@ -69,7 +69,7 @@ def FRONTEND():
         </div>    
     <div class="grey statistic">
         <div class="value">
-        """+"34"+"""
+        """+"3"+"""
         </div>
         <div class="label">
         Data Collecting Scripts
@@ -78,10 +78,10 @@ def FRONTEND():
 
     <div class="grey statistic">
         <div class="value">
-        """+"dlkf"+"""
+        """+"3,6 GB"+"""
         </div>
         <div class="label">
-        Data Size
+        Collected Data Size
         </div>
     </div>
     </div>"""
@@ -94,7 +94,7 @@ def FRONTEND():
 
 
     # Listing files in folder raw_files
-    st.markdown('###### Raw data')
+    st.markdown('###### Raw data folders')
     col1, col2, col3 = st.columns(3)
     file_structure = list_files_in_directory('../data/raw_files')
     for index, (folder, files) in enumerate(file_structure.items()):

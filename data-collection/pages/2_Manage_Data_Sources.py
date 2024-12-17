@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from utils import load_data_sources, delete_data_source, edit_data_source, deactivate_data_source
+from utils import load_data_sources, delete_data_source, edit_data_source, deactivate_data_source, activate_data_source
 
 st.title("Manage Data Sources")
 
@@ -26,9 +26,8 @@ else:
         st.write("### Activate a Data Source")
         index_to_deactivate = st.number_input("Select the index of the source to activate", min_value=0, max_value=len(data_sources) - 1, step=1)
         if st.button("Activate"):
-            deactivate_data_source(index_to_deactivate)
+            activate_data_source(index_to_deactivate)
             st.success("Data source activated.")
-            st.rerun()
 
 
         st.write("### Deactivate a Data Source")
@@ -36,7 +35,7 @@ else:
         if st.button("Deactivate"):
             deactivate_data_source(index_to_deactivate)
             st.success("Data source deactivated.")
-            st.rerun()
+            
 
 
     with col2:

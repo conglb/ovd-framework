@@ -5,8 +5,11 @@ from os.path import join, isdir
 import subprocess
 import concurrent.futures
 from utlis import get_file_list, get_folder_list, get_cleaning_scripts, SCRIPT_FILES_DIR, CLEANED_FILES_DIR, RAW_FILES_DIR
+from datetime import datetime
 
-
+def log_cleaning(file_path):
+    with open('./cleaned_files.log', "a") as f:
+        f.write(f"{datetime.now()}: cleaned a new file at {file_path}\n")
 
 # Hàm chạy script làm sạch với subprocess
 def run_cleaning_script(script_name, raw_file_path, output_file_path):
@@ -92,6 +95,7 @@ if selected_folder:
                         st.write("Number of columns: {}".format(len(cleaned_df.columns)))
                         st.write("Number of rows: {}".format(len(cleaned_df)))
                         st.dataframe(cleaned_df)
+                        log_cleaning(cleaned_file_path)
                     else:
                         st.error("Error occurs when running script")
             cleaning_in_progress.text("Finished!")
