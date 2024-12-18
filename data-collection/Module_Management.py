@@ -6,15 +6,18 @@ from flask import Flask
 import threading
 from api import BACKEND
 from utils import list_files_in_directory, load_data_sources
-from st_aggrid import AgGrid, GridOptionsBuilder
 
 def print_dataframe(df):
     # Map 'Status' column to icons
     def status_to_dot(status):
         return " \t\t    	✅" if status == 'active' else " \t\t     ⛔"
 
-    df['status'] = df['status'].apply(status_to_dot)
-    df = df[['name', 'data_category', 'description', 'collecting_script', 'collecting_frequency', 'last_collected_time', 'when_created', 'status']]
+    keep_columns = ['name', 'data_category', 'description', 'collecting_script', 'collecting_frequency', 'last_collected_time', 'when_created']
+    if 'status' in df:
+        keep_columns.append('status')
+        df['status'] = df['status'].apply(status_to_dot)
+
+    df = df[keep_columns]
     st.dataframe(df,use_container_width=True)
 
 

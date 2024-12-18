@@ -3,7 +3,7 @@ import streamlit as st
 
 # Streamlit App
 st.set_page_config(
-        page_title="Data Storage Module",
+        page_title="Data Presentation Module",
         page_icon="🧊",
         layout="wide",
         initial_sidebar_state="expanded",

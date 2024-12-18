@@ -33,7 +33,7 @@ local_css("style.css")
 table_scorecard = """<br>
 <div class="ui three small statistics">
     <div class="grey statistic">
-        <div class="value">"""+"234"+"""
+        <div class="value">"""+"2"+"""
         </div>
         <div class="label">
         Data Folders
@@ -41,7 +41,7 @@ table_scorecard = """<br>
     </div>
 <div class="grey statistic">
     <div class="value">
-    """+"34"+"""
+    """+"3"+"""
     </div>
     <div class="label">
     Data Cleaning Scripts
@@ -50,7 +50,7 @@ table_scorecard = """<br>
 
 <div class="grey statistic">
     <div class="value">
-    """+"dlkf"+"""
+    """+"1.3 GB"+"""
     </div>
     <div class="label">
     Data Size
