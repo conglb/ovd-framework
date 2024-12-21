@@ -4,4 +4,6 @@ There are four modules chained in order: Data Collecting Module -> Data Cleaning
 
 
 ### TODO
-
+- Exploratory Data Analysis
+- Dashboard for AIS data
+- Dashboard for Ship performance
