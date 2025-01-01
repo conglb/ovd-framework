@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+import io
 from os import listdir
 from dataclasses import dataclass
 from os.path import join, isdir, isfile
@@ -39,12 +40,19 @@ def build_sidebar_UI(DATA_DIR="../data/raw_files") -> UserInput:
     )
 
 def build_main_UI(user_input: UserInput) -> None:
-    st.write(user_input)
     df = get_dataframe(user_input.SRC_FILE_PATH)
     st.write(df)
 
     colume_name = st.selectbox('Choose colume', df.columns)
-    st.write(df[colume_name].info())
+
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.write(df[colume_name].describe())
+    
+    buffer = io.StringIO()
+    df.info(buf=buffer, verbose=True)
+    s = buffer.getvalue()
+    st.text(s)
 
 
 # Streamlit App def main():
