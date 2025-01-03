@@ -3,8 +3,20 @@ import os
 from os.path import join
 import subprocess
 import concurrent.futures
-from utlis import get_folder_list, get_file_list, get_storing_scripts
+from utils import get_folder_list, get_file_list, get_storing_scripts
 import streamlit as st
+
+st.set_page_config(
+        page_title="Data Storing Module",
+        page_icon="🧊",
+        layout="wide",
+        initial_sidebar_state="expanded",
+        menu_items={
+            'Get Help': 'https://github.com/conglb',
+            'Report a bug': "https://github.com/conglb",
+        }
+    )
+st.markdown("##### 1. [Data Collection Module](http://localhost:8511) &emsp; &emsp; [2. Data Cleaning Module](http://localhost:8512) &emsp; &emsp; [3. Data Storage Module] &emsp; &emsp; [4. Data Presentation Module](http://localhost:8514)")
 
 # Thư mục lưu file chưa làm sạch và đã làm sạch
 #RAW_FILES_DIR = "../data/raw_files"
@@ -13,6 +25,11 @@ SCRIPT_FILES_DIR = "./storing_scripts"
 
 # Tạo các thư mục nếu chưa có
 os.makedirs(CLEANED_FILES_DIR, exist_ok=True)
+
+def show_dataframe(df):
+    st.write("Number of columns: {}".format(len(df.columns)))
+    st.write("Number of rows: {}".format(len(df)))
+    st.dataframe(df)
 
 # Hàm chạy script làm sạch với subprocess
 def run_storing_script(script_name, raw_file_path):
@@ -34,6 +51,18 @@ selected_folder = st.sidebar.selectbox("Choose a folder", folder_list)
 if folder_list:
     file_list = get_file_list(join(CLEANED_FILES_DIR, selected_folder))
     selected_files = st.sidebar.multiselect("Choose a file to store", file_list)
+
+    if len(selected_files) == 1:
+        raw_file_path = [os.path.join(CLEANED_FILES_DIR, selected_folder, selected_file) for selected_file in selected_files ]
+        df = pd.read_csv(raw_file_path[0])
+        show_dataframe(df)
+    elif len(selected_files) > 1:
+        raw_file_path = [os.path.join(CLEANED_FILES_DIR, selected_folder, selected_file) for selected_file in selected_files ]
+        tabs = st.tabs(selected_files)
+        for index, tab in enumerate(tabs):
+            with tab:
+                df = pd.read_csv(raw_file_path[index])
+                show_dataframe(df)
 
     # Lấy danh sách các script làm sạch
     script_list = get_storing_scripts()

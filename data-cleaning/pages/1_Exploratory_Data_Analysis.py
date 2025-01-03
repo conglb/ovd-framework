@@ -6,6 +6,7 @@ from os import listdir
 from dataclasses import dataclass
 from os.path import join, isdir, isfile
 from utlis import get_file_list, get_folder_list, get_cleaning_scripts, SCRIPT_FILES_DIR, CLEANED_FILES_DIR, RAW_FILES_DIR, list_files_in_directory
+import plotly.express as px
 
 
 
@@ -40,19 +41,36 @@ def build_sidebar_UI(DATA_DIR="../data/raw_files") -> UserInput:
     )
 
 def build_main_UI(user_input: UserInput) -> None:
+
     df = get_dataframe(user_input.SRC_FILE_PATH)
     st.write(df)
 
-    colume_name = st.selectbox('Choose colume', df.columns)
-
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     with col1:
-        st.write(df[colume_name].describe())
-    
-    buffer = io.StringIO()
-    df.info(buf=buffer, verbose=True)
-    s = buffer.getvalue()
-    st.text(s)
+        st.write("Number of columns: ", len(df.columns) )
+        colume_name = st.selectbox('Choose colume', df.columns)
+        data_type = df[colume_name].dtype
+        st.write("Data type: ",data_type)
+        st.write("Number of NaN values: ",df[colume_name].isna().sum())
+        st.write("Number of Not-Null values: ",df[colume_name].notna().sum())
+        if data_type != object:
+            st.write("Min: ",df[colume_name].min())
+            st.write("Max: ",df[colume_name].max())
+            st.write("Mean: ",df[colume_name].mean())
+        else:
+            st.write(f"Number of unique values: ", len(df[colume_name].unique()))
+    with col2:
+        if data_type == object:
+            st.write(df[colume_name].unique())
+        else:
+            fig = px.histogram(df[colume_name], marginal="box", barmode="group")
+            fig.update_layout(
+                title_text="Histogram of the Variable",
+                title_x=0.5,
+                yaxis_title="# of entries",
+                xaxis_title="Value")
+            st.write(fig)
+            
 
 
 # Streamlit App def main():
