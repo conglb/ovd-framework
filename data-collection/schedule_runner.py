@@ -8,6 +8,7 @@ import json
 # File paths for logs
 download_log_file = "downloaded_files.log"
 error_log_file = "error_log.log"
+performance_log_file = "performance_log.log"
 DATA_SOURCES_FILE = '../data/data_sources.json'
 SCRIPT_FILES_DIR = "./collecting_scripts"
 
@@ -21,6 +22,10 @@ def log_error(task_name, error_msg):
     with open(error_log_file, "a") as f:
         f.write(f"{datetime.now()} - {task_name} - ERROR: {error_msg}\n")
 
+def log_performance(task_name, time_spent):
+    with open(performance_log_file, 'a') as f:
+        f.write(f"{task_name} : {time_spent}")
+
 # Load data sources from JSON configuration
 def load_data_sources():
     if os.path.exists(DATA_SOURCES_FILE):
@@ -31,6 +36,7 @@ def load_data_sources():
 # Task 1: Chạy file T1.py
 def run_task(task_name, script_url):
     try:
+        start_time = time.time()
         if script_url.endswith(".py"):
             result = subprocess.run(["python3", script_url], capture_output=True, text=True)
         elif script_url.endswith(".sh"):
@@ -40,9 +46,11 @@ def run_task(task_name, script_url):
             return 0
         if result.returncode == 0:
             print(f"Collect data from {task_name} completed successfully.")
+            end_time = time.time()
             downloaded_files = result.stdout.strip().split("\n")  # Giả sử file được download list trong stdout
             for file in downloaded_files:
                 log_download(file)
+                log_performance(f"File_size: {os.path.getsize(file)}", f"Time: {end_time-start_time}")
         else:
             log_error(task_name, result.stderr)
     except Exception as e:

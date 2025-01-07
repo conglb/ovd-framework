@@ -5,6 +5,16 @@ import streamlit as st
 from utils import get_storing_scripts, SCRIPT_FILES_DIR
 from os.path import join
 
+st.set_page_config(
+        page_title="Data Storing Module",
+        page_icon="🧊",
+        layout="wide",
+        initial_sidebar_state="expanded",
+        menu_items={
+            'Get Help': 'https://github.com/conglb',
+            'Report a bug': "https://github.com/conglb",
+        }
+    )
 st.title("Manage Data Storing Scripts")
 
 def read_script_file(path='./storing_scripts/examples/storing_script_template.py'):
@@ -12,10 +22,10 @@ def read_script_file(path='./storing_scripts/examples/storing_script_template.py
         return f.read()
     return "error reading template file"
 
-def run_storing_script(script_name, extension):
+def run_storing_script(script_name, extension, arguments):
     try:
         if extension == 'Python':
-            process = subprocess.run(['python', join("storing_scripts/", script_name+'.py')], check=True, capture_output=True, text=True)
+            process = subprocess.run(['python', join("storing_scripts/", script_name+'.py'), arguments], check=True, capture_output=True, text=True)
             output = process.stdout
             if output:
                 return {'status': 1, 'message': output}
@@ -32,6 +42,7 @@ def build_Main_UI():
 
     with col2:
         extension = st.radio("Choose program language", ["Python", "Bash"])
+        arguments = st.text_input("Arguments: ")
         clickRun = st.button("Run")
 
     if function == 'Create a new script':
@@ -59,7 +70,7 @@ def build_Main_UI():
             file.write(content)
         with concurrent.futures.ThreadPoolExecutor() as executor:
                 st.text(f"Running script ...")
-                future = executor.submit(run_storing_script, '_draft', extension=extension)
+                future = executor.submit(run_storing_script, '_draft', extension=extension, arguments=arguments)
                 result = future.result() 
 
                 if result['status']:
