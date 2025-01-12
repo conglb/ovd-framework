@@ -6,10 +6,15 @@ import subprocess
 import concurrent.futures
 from utlis import get_file_list, get_folder_list, get_cleaning_scripts, SCRIPT_FILES_DIR, CLEANED_FILES_DIR, RAW_FILES_DIR
 from datetime import datetime
+import time
 
 def log_cleaning(file_path):
     with open('./cleaned_files.log', "a") as f:
         f.write(f"{datetime.now()}: cleaned a new file at {file_path}\n")
+
+def log_performance(file_size, time_spent):
+    with open('./performance_log.log', 'a') as f:
+        f.write(f"{file_size},{time_spent}\n")
 
 # Hàm chạy script làm sạch với subprocess
 def run_cleaning_script(script_name, raw_file_path, output_file_path):
@@ -82,11 +87,15 @@ if selected_folder:
                 os.makedirs(output_dir_path, exist_ok=True)
                 output_file_path = join(CLEANED_FILES_DIR, selected_folder, f"cleaned_{selected_file}")
 
-                # Sử dụng ThreadPoolExecutor để thực hiện việc chạy script trong nền
+                # Run task in ThreadPoolExecutor
                 with concurrent.futures.ThreadPoolExecutor() as executor:
                     cleaning_in_progress.text(f"Cleaning file '{selected_file}' using script '{selected_script}'...")
-                    future = executor.submit(run_cleaning_script, selected_script, os.path.join(RAW_FILES_DIR, selected_folder, selected_file), output_file_path)
+                    input_file_path = os.path.join(RAW_FILES_DIR, selected_folder, selected_file) 
+                    start_time = time.time()
+                    future = executor.submit(run_cleaning_script, selected_script, input_file_path, output_file_path)
                     cleaned_file_path = future.result()  # Chờ quá trình làm sạch hoàn tất
+                    end_time = time.time()
+                    log_performance(os.path.getsize(input_file_path), end_time-start_time)
 
                     if cleaned_file_path is not None:
                         cleaned_df = pd.read_csv(cleaned_file_path)

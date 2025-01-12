@@ -1,0 +1,24 @@
+{
+    "name": "AISHub",
+    "data_category": "AIS data",
+    "url": "ttp://data.aishub.net/ws.php?username=${USERNAME}&format=1&output=csv&compress=0",
+    "description": "Public AIS data across the world.",
+    "file_format": "CSV",
+    "collecting_script": "aishub.com.sh",
+    "collecting_frequency": "Daily",
+    "last_collected_time": "2024-12-15 16:02:01",
+    "when_created": "2024-12-14 12:19:49",
+    "status": "active"
+},
+{
+    "name": "Danish Maritime Authority",
+    "data_category": "AIS data",
+    "url": "http://web.ais.dk/aisdata/",
+    "description": "Public AIS data in Baltic sea",
+    "file_format": "CSV",
+    "collecting_script": "dmk.dk.py",
+    "collecting_frequency": "Monthly",
+    "last_collected_time": "2024-12-15 16:01:01",
+    "when_created": "2024-12-14 12:22:01",
+    "status": "inactive"
+},

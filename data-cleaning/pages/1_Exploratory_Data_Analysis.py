@@ -2,10 +2,12 @@ import streamlit as st
 import pandas as pd
 import os
 import io
+import io
 from os import listdir
 from dataclasses import dataclass
 from os.path import join, isdir, isfile
 from utlis import get_file_list, get_folder_list, get_cleaning_scripts, SCRIPT_FILES_DIR, CLEANED_FILES_DIR, RAW_FILES_DIR, list_files_in_directory
+import plotly.express as px
 import plotly.express as px
 
 
@@ -50,7 +52,8 @@ def build_main_UI(user_input: UserInput) -> None:
         st.write("Number of columns: ", len(df.columns) )
         colume_name = st.selectbox('Choose colume', df.columns)
         data_type = df[colume_name].dtype
-        st.write("Data type: ",data_type)
+        st.write("Column's data type: ",data_type)
+        st.write("Number of rows: ", len(df))
         st.write("Number of NaN values: ",df[colume_name].isna().sum())
         st.write("Number of Not-Null values: ",df[colume_name].notna().sum())
         if data_type != object:
@@ -61,7 +64,8 @@ def build_main_UI(user_input: UserInput) -> None:
             st.write(f"Number of unique values: ", len(df[colume_name].unique()))
     with col2:
         if data_type == object:
-            st.write(df[colume_name].unique())
+            unique_values = df[colume_name].unique()
+            st.write(", ".join(map(str, unique_values)))
         else:
             fig = px.histogram(df[colume_name], marginal="box", barmode="group")
             fig.update_layout(

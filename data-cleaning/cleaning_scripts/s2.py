@@ -5,8 +5,7 @@ import os
 CLEANED_FILES_DIR = "../data/cleaned_files"
 
 def clean(input_filename, output_filename):
-    """_summary_
-
+    """
     Args:
         input_filename (string): path to the file will be cleaned
 
