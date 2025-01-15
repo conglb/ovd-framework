@@ -150,18 +150,13 @@ def get_vessel_info(imo: int):
     return None
 
 
-def build_sidebar_UI(DATA_DIR="data/") -> UserInput:
+def build_sidebar_UI() -> UserInput:
     """ At first, Build sidebar user interface and return the user defined values. """
 
     st.sidebar.subheader("Choose profile")
-    dirs = [f for f in listdir(DATA_DIR) if isdir(
-        join(DATA_DIR, f))]
-    DIR_NAME = st.sidebar.selectbox("Select group (directory)", dirs, index=0)
-    file = [f for f in listdir(join(DATA_DIR,DIR_NAME)) if isfile(
-        join(DATA_DIR,DIR_NAME, f))]
-    FILE_NAME = st.sidebar.selectbox("Select ship", file, index=0)
-    SRC_FILE_PATH = join(DATA_DIR, DIR_NAME, FILE_NAME)
-    df = get_dataframe(SRC_FILE_PATH)
+    st.sidebar.header("Select Date Range")
+    start_date = st.sidebar.date_input("Start Date", datetime(2024, 7, 1))
+    end_date = st.sidebar.date_input("End Date", datetime(2024, 8, 31))
 
     nav_status_list = df.navstatus.unique()
     NAVSTATUS = st.sidebar.multiselect(label="Select navigation status", options=nav_status_list, default=nav_status_list)

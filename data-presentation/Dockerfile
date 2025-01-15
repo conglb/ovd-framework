@@ -6,7 +6,7 @@ WORKDIR /app
 # Sao chép tất cả các file trong thư mục hiện tại vào container
 
 # Cài đặt các thư viện cần thiết
-RUN pip install --no-cache-dir streamlit pandas requests flask streamlit_monaco
+RUN pip install --no-cache-dir streamlit pandas requests flask streamlit_monaco psycopg2
 
 # Expose cổng 8501 cho Streamlit
 EXPOSE 8014
