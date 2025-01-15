@@ -6,6 +6,7 @@ from flask import Flask
 import threading
 from api import BACKEND
 from utils import list_files_in_directory, load_data_sources
+from schedule_runner import schedule_tasks
 
 def print_dataframe(df):
     # Map 'Status' column to icons
@@ -134,5 +135,9 @@ def FRONTEND():
 if __name__ == '__main__':
 
     FRONTEND()
+
+    if not hasattr(st, 'already_started_server'):
+        st.already_started_server = True
+        schedule_tasks()
 
 
