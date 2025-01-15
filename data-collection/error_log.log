@@ -1,0 +1,15 @@
+data_storage-1 exited with code 2
+
+data_collection-1 exited with code 2
+
+data_cleaning-1 exited with code 2
+
+data_presentation-1 exited with code 2
+
+timescaledb-1        | 2024-12-17 16:01:22.722 UTC [38] LOG:  the "timescaledb" extension is not up-to-date
+
+timescaledb-1        | 2024-12-17 16:01:22.722 UTC [38] HINT:  The most up-to-date version is 2.17.2, the installed version is 2.17.1.
+
+timescaledb-1        | 2024-12-17 16:01:22.797 UTC [37] LOG:  the "timescaledb" extension is not up-to-date
+s
+timescaledb-1        | 2024-12-17 16:01:22.797 UTC [37] HINT:  The most up-to-date version is 2.17.2, the installed version is 2.17.1.

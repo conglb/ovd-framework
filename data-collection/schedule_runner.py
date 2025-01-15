@@ -103,6 +103,9 @@ def schedule_tasks():
             log_error(task_name, "skipped this data source")
             continue
 
+        if collecting_frequency == "Every 20 minutes":
+            run_task(task_name, script_url)
+            schedule.every(20).minutes.do(run_task, task_name=task_name, script_url=script_url)
         if collecting_frequency == "Hourly":
             schedule.every().hour.at(":59").do(run_task, task_name=task_name, script_url=script_url)
         elif collecting_frequency == "Daily":
