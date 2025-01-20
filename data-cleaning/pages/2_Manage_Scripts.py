@@ -53,7 +53,7 @@ def build_Main_UI():
     with col2:
         if st.button("Save"):
             if script_name:
-                script_path = SCRIPT_FILES_DIR + script_name + lastName
+                script_path = SCRIPT_FILES_DIR + script_name
                 with open(script_path, "w") as file:
                     file.write(content)
                     st.success(f"Saved script sucessfully to {script_path}")

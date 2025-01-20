@@ -1,5 +1,23 @@
 version: '3'
 services:
+
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    command: postgres -c shared-preload-libraries=timescaledb
+    ports:
+      - "5432:5432"
+    environment:
+      - PGDATA=/var/lib/postgresql/data/timescaledb
+      - POSTGRES_DB=ovd
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - ./database:/var/lib/postgresql/data/timescaledb
+    networks:
+      - app-network
+    tty: true
+    
+
   data_collection:
     image: data-collection-image:latest
     build:
@@ -37,6 +55,10 @@ services:
       - "8013:8013"   # Map cổng cho Flask
     networks:
       - app-network
+    depends_on:
+      - timescaledb
+    links:
+      - timescaledb
     volumes:
       - ./data:/data  # Mount the shared volume
       - ./data-storage:/app # Mount source code
@@ -56,18 +78,6 @@ services:
       - ./data-presentation:/app # Mount source code
     tty: true
   
-  timescaledb:
-    image: timescale/timescaledb:latest-pg16
-    command: postgres -c shared-preload-libraries=timescaledb
-    ports:
-      - "5432:5432"
-    environment:
-      - PGDATA=/var/lib/postgresql/data/timescaledb
-      - POSTGRES_DB=ovd
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-    volumes:
-      - ./database:/var/lib/postgresql/data/timescaledb
 
 networks:
   app-network:

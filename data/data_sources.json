@@ -9,6 +9,9 @@
         "collecting_frequency": "Hourly",
         "last_collected_time": "not collected",
         "when_created": "\"2025-01-07 16:53:50\"",
+        "collecting_frequency": "Every 20 minutes",
+        "last_collected_time": "2024-12-15 16:02:01",
+        "when_created": "2024-12-14 12:19:49",
         "status": "active"
     }
 ]

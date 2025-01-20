@@ -2,39 +2,53 @@ import sys
 import pandas as pd
 import os
 import psycopg2
+import json
 
 def write_chunk_to_db(cursor, conn, df_chunk):
-    insert_query = """INSERT INTO ais_data (timestamp, imo, mmsi, data) VALUES (%s, %s, %s, %s)"""
+    insert_query = """INSERT INTO ais_data (timestamp, mmsi, imo, ship_type, heading, course, speed, navstatus, name, callsign, draught, destination, eta, latitude, longitude, extra) 
+                                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
     
     # convert timestamp string to timstamp unix
-    df_chunk['Timestamp'] = pd.to_datetime(df_chunk['Timestamp'], format='%d/%m/%Y %H:%M:%S') 
+    #df_chunk['timestamp'] = pd.to_datetime(df_chunk['timestamp'], format='%d/%m/%Y %H:%M:%S') 
     
     for _, row in df_chunk.iterrows():
-        (timestamp, imo, mmsi, data) = (None, None, None, None)
-        for column in df_chunk.columns: 
-            if column == "Timestamp":
-                timestamp = row['Timestamp']
-            elif column == "IMO":
-                imo = row['imo']
-            elif column == "MMSI":
-                mmsi = row['mmsi']
-            else:
-                data = row[column]
-        cursor.execute(insert_query, (timestamp, imo, mmsi, data))
+        (timestamp, mmsi, imo, ship_type, heading, course, speed, navstatus, name, callsign, draught, destination, eta, latitude, longitude, extra) = (None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,  {})
+        
+        timestamp = row.get('timestamp')
+        mmsi = row.get('mmsi')
+        imo = row.get('imo')
+        ship_type = row.get('ship_type')
+        heading = row.get('heading')
+        course = row.get('course')
+        speed = row.get('speed')
+        navstatus = row.get('navstatus')
+        name = row.get('name')
+        callsign = row.get('callsign')
+        draught = row.get('draught')
+        destination = row.get('destination')
+        #eta = row.get('eta')
+        latitude = row.get('latitude')
+        longitude = row.get('longitude')
+        extra['type'] = 0 if pd.isna(row['type']) else row['type']
+        extra['A'] = -1 if pd.isna(row['type']) else row['type']
+        extra['B'] = -1 if pd.isna(row['type']) else row['type']
+        extra['C'] = -1 if pd.isna(row['type']) else row['type']
+        extra['D'] = -1 if pd.isna(row['type']) else row['type']
+        
+        cursor.execute(insert_query, (timestamp, mmsi, imo, ship_type, heading, course, speed, navstatus, name, callsign, draught, destination, eta, latitude, longitude, json.dumps(extra)) )
     conn.commit()
 
-def storing(input_filename):
+def storing(input_filepath):
     # Đọc file dữ liệu thô
-    print('storing ', input_filename)
+    print('storing ', input_filepath)
     
-    #CONNECTION = "postgres://username:password@host:port/dbname"
     CONNECTION = "dbname=ovd user=admin password=admin host=localhost port=5432"
     conn = psycopg2.connect(CONNECTION)
     cursor = conn.cursor()
 
     chunk_size = 10000  # Kích thước mỗi chunk, bạn có thể điều chỉnh kích thước này
     i = 1
-    for chunk in pd.read_csv(input_filename, chunksize=chunk_size):
+    for chunk in pd.read_csv(input_filepath, chunksize=chunk_size):
         write_chunk_to_db(cursor, conn, chunk)
         print(f"Data loaded successfully into TimescaleDB. Chunk #{i}")
         i += 1
@@ -44,5 +58,5 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage error: python script-number.py FILE_PATH")
     else:
-        input_filename = sys.argv[1]
-        storing(input_filename)
+        input_filepath = sys.argv[1]
+        storing(input_filepath)
