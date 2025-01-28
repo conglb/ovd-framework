@@ -20,8 +20,8 @@ st.markdown("##### 1. [Data Collection Module](http://localhost:8511) &emsp; &em
 
 # Thư mục lưu file chưa làm sạch và đã làm sạch
 #RAW_FILES_DIR = "../data/raw_files"
-CLEANED_FILES_DIR = "../data/cleaned_files"
-SCRIPT_FILES_DIR = "./storing_scripts"
+CLEANED_FILES_DIR = "../data/cleaned_files/"
+SCRIPT_FILES_DIR = "./storing_scripts/"
 
 # Tạo các thư mục nếu chưa có
 os.makedirs(CLEANED_FILES_DIR, exist_ok=True)
@@ -74,7 +74,7 @@ if folder_list:
 
     if st.sidebar.button("Store Data"):
         for selected_file in selected_files:
-            raw_file_path = os.path.join(CLEANED_FILES_DIR, selected_file)
+            raw_file_path = os.path.join(CLEANED_FILES_DIR, selected_folder, selected_file)
 
             # Sử dụng ThreadPoolExecutor để thực hiện việc chạy script trong nền
             with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -83,7 +83,7 @@ if folder_list:
                 result = future.result()  # Chờ quá trình làm sạch hoàn tất
 
                 if result==1:
-                    st.success(f"File '{selected_file}' cleaned successfully.")
+                    st.success(f"File '{selected_file}' stored successfully.")
                 else:
                     st.error(f"Error occurs when running script: \n {result}")
 else:

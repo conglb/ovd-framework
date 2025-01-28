@@ -1,29 +1,27 @@
 import streamlit as st
-from influxdb_client import InfluxDBClient
 import pandas as pd
 import plotly.express as px
 from datetime import datetime
 import psycopg2
+import time
 
 # TimscaleDB connection configuration
-CONNECTION = "dbname=ovd user=admin password=admin host=localhost port=5432"
+CONNECTION = "dbname=ovd user=admin password=admin host=timescaledb_ovd port=5432"
 conn = psycopg2.connect(CONNECTION)
 cursor = conn.cursor()
 
 # Function to query AIS data from InfluxDB
 def query_ais_data(start_date, end_date):
-    query = f'''
-        from(bucket: "{INFLUXDB_BUCKET}")
-        |> range(start: {start_date}, stop: {end_date})
-        |> filter(fn: (r) => r._measurement == "test1")
-        |> filter(fn: (r) => r._field == "Latitude" or r._field == "Longitude")
-        |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
-        |> keep(columns: ["_time", "Latitude", "Longitude"])
-    '''
-    with InfluxDBClient(url=INFLUXDB_URL, token=INFLUXDB_TOKEN, org=INFLUXDB_ORG) as client:
-        query_api = client.query_api()
-        result = query_api.query_data_frame(query)
-        return result
+    query = """
+        SELECT * FROM ais_data
+        WHERE date_part('year', timestamp) = 2025 
+    """
+    cursor.execute(query)
+    data = cursor.fetchall()
+    columns = [desc[0] for desc in cursor.description]
+    df = pd.DataFrame(data, columns=columns)
+    return df
+
 
 # Streamlit app layout
 st.title("AIS Data Viewer")
@@ -39,6 +37,7 @@ if start_date > end_date:
 
 # Retrieve data from InfluxDB
 if st.sidebar.button("Retrieve AIS Data"):
+    start_time = time.time()
     with st.spinner("Retrieving data..."):
         try:
             df = query_ais_data(start_date, end_date)
@@ -47,6 +46,7 @@ if st.sidebar.button("Retrieve AIS Data"):
             # Display raw data in a table
             st.subheader("AIS Data")
             st.dataframe(df)
+            st.write(df)
 
             # Create a map using Plotly for lat/lon visualization
             st.subheader("AIS Vessel Locations")
@@ -54,9 +54,9 @@ if st.sidebar.button("Retrieve AIS Data"):
                 # Plotly scattergeo plot for mapping lat/lon
                 fig = px.scatter_geo(
                     df,
-                    lat='Latitude',
-                    lon='Longitude',
-                    hover_name="_time",
+                    lat='latitude',
+                    lon='longitude',
+                    hover_name="timestamp",
                     title="Vessel Locations",
                     projection="natural earth",
                 )

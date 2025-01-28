@@ -4,6 +4,7 @@ services:
   timescaledb:
     image: timescale/timescaledb:latest-pg16
     command: postgres -c shared-preload-libraries=timescaledb
+    container_name: timescaledb_ovd
     ports:
       - "5432:5432"
     environment:
@@ -16,10 +17,11 @@ services:
     networks:
       - app-network
     tty: true
-    
+
 
   data_collection:
     image: data-collection-image:latest
+    container_name: data-collection
     build:
       context: ./data-collection
     ports:
@@ -34,6 +36,7 @@ services:
     
   data_cleaning:
     image: data-cleaning-image:latest
+    container_name: data-cleaning
     build:
       context: ./data-cleaning
     ports:
@@ -48,6 +51,7 @@ services:
 
   data_storage:
     image: data-storage-image:latest
+    container_name: data-storage
     build:
       context: ./data-storage
     ports:
@@ -66,6 +70,7 @@ services:
 
   data_presentation:
     image: data-presentation-image:latest
+    container_name: data-presentation
     build:
       context: ./data-presentation
     ports:

@@ -51,7 +51,7 @@ def storing(input_filepath):
             dbname="ovd",
             user="admin",
             password="admin",
-            host="localhost",
+            host="timescaledb_ovd",
             port="5432"
         )
     cursor = conn.cursor()
