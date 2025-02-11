@@ -117,6 +117,14 @@ def schedule_tasks():
     #schedule.every().hour.at(":49").do(task_2)  # Chạy Task 2 vào 20 phút
     #schedule.every().hour.at(":40").do(task_3)  # Chạy Task 3 vào 40 phút
 
+def start_schedule():
+    schedule_tasks()
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+        
+
 # Vòng lặp chính để chạy tasks tuần tự
 if __name__ == "__main__":
     # Tạo file log nếu chưa có

@@ -69,7 +69,7 @@ def build_main_UI(user_input: UserInput) -> None:
         else:
             fig = px.histogram(df[colume_name], marginal="box", barmode="group")
             fig.update_layout(
-                title_text="Histogram of the Variable",
+                title_text="Histogram of the Column",
                 title_x=0.5,
                 yaxis_title="# of entries",
                 xaxis_title="Value")

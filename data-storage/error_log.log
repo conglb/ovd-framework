@@ -1,0 +1,5 @@
+2025-02-03 10:31:21.293105 - sotring-to-timescaledb-aishub-in-batch.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-12_18.40.21.csv
+
+2025-02-04 09:17:07.437380 - sotring-to-timescaledb-aishub-in-batch.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-13_06.23.45.csv
+
+2025-02-10 12:20:22.596404 - storing-to-influxdb_script_2.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-13_07.29.40.csv

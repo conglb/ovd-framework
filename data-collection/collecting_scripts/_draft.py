@@ -12,7 +12,7 @@ BASE_URL = "http://web.ais.dk/aisdata/"
 
 # Directory to save downloaded files
 DOWNLOAD_DIR = "./data/DMA.dk"
-
+ 
 FILE_NAME_PATTERN = r"aisdk-(\d{4})-(\d{2})-(\d{2}).zip"
 
 # Ensure download directory exists

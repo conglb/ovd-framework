@@ -33,7 +33,7 @@ local_css("style.css")
 table_scorecard = """<br>
 <div class="ui three small statistics">
     <div class="grey statistic">
-        <div class="value">"""+"234"+"""
+        <div class="value">"""+"4"+"""
         </div>
         <div class="label">
         Data Folders
@@ -41,7 +41,7 @@ table_scorecard = """<br>
     </div>
 <div class="grey statistic">
     <div class="value">
-    """+"34"+"""
+    """+"2"+"""
     </div>
     <div class="label">
     Data Cleaning Scripts
@@ -50,7 +50,7 @@ table_scorecard = """<br>
 
 <div class="grey statistic">
     <div class="value">
-    """+"dlkf"+"""
+    """+"3.8 GB"+"""
     </div>
     <div class="label">
     Data Size
@@ -87,9 +87,14 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown('###### Logs')
 with st.container(height=320):
-    tab1, tab2 = st.tabs(["Cleaning log", "Errorquit()"])
+    tab1, tab2 = st.tabs(["Cleaning log", "Error"])
     with tab1:
         with open('cleaned_files.log', "r") as f:
-            st.write(f.read())
+            while True:
+                line = f.readline()
+                if line == '':
+                    break
+                st.write(line)
+
 
 

@@ -24,29 +24,12 @@ local_css("style.css")
 
 # Statistics
 table_scorecard = """
-<div class="ui four small statistics">
+<div class="ui two small statistics">
 <div class="grey statistic">
     <div class="value">"""+"34"+"""
     </div>
     <div class="grey label">
-    Data Sources
-    </div>
-</div>
-
-<div class="grey statistic">
-    <div class="value">"""+"234"+"""
-    </div>
-    <div class="label">
-    Data Folders
-    </div>
-</div>
-
-<div class="grey statistic">
-    <div class="value">
-    """+"34"+"""
-    </div>
-    <div class="label">
-    Data Collecting Scripts
+    Dashboard
     </div>
 </div>
 
@@ -55,7 +38,7 @@ table_scorecard = """
     """+"dlkf"+"""
     </div>
     <div class="label">
-    Data Size
+    Database Size
     </div>
 </div>
 </div>"""

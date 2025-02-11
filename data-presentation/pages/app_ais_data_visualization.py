@@ -10,6 +10,10 @@ CONNECTION = "dbname=ovd user=admin password=admin host=timescaledb_ovd port=543
 conn = psycopg2.connect(CONNECTION)
 cursor = conn.cursor()
 
+def log_performance(file_size, time_spent):
+    with open('./performance_log.log', 'a') as f:
+        f.write(f"{file_size},{time_spent}\n")
+
 # Function to query AIS data from InfluxDB
 def query_ais_data(start_date, end_date):
     query = """
@@ -37,16 +41,15 @@ if start_date > end_date:
 
 # Retrieve data from InfluxDB
 if st.sidebar.button("Retrieve AIS Data"):
-    start_time = time.time()
     with st.spinner("Retrieving data..."):
         try:
+            start_time = time.time()
             df = query_ais_data(start_date, end_date)
             st.success("Data retrieved successfully!")
 
             # Display raw data in a table
             st.subheader("AIS Data")
             st.dataframe(df)
-            st.write(df)
 
             # Create a map using Plotly for lat/lon visualization
             st.subheader("AIS Vessel Locations")
@@ -66,6 +69,8 @@ if st.sidebar.button("Retrieve AIS Data"):
 
                 st.plotly_chart(fig)
             else:
-                st.warning("No data found for the selected date range.")
+                st.warning("No data found for the selected date range.") 
+            end_time = time.time()
+            log_performance(131*len(df),end_time-start_time) #131 bytes per datarow.
         except Exception as e:
             st.error(f"Error retrieving data: {e}")

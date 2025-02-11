@@ -12,10 +12,7 @@ def log_performance(file_size, time_spent):
 def write_chunk_to_db(cursor, conn, df_chunk):
     insert_query = """INSERT INTO ais_data (timestamp, mmsi, imo, ship_type, heading, course, speed, navstatus, name, callsign, draught, destination, eta, latitude, longitude, extra) 
                                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-    
-    # convert timestamp string to timstamp unix
-    #df_chunk['timestamp'] = pd.to_datetime(df_chunk['timestamp'], format='%d/%m/%Y %H:%M:%S') 
-    
+
     for _, row in df_chunk.iterrows():
         (timestamp, mmsi, imo, ship_type, heading, course, speed, navstatus, name, callsign, draught, destination, eta, latitude, longitude, extra) = (None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,  {})
         

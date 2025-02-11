@@ -1,6 +1,6 @@
 import streamlit as st
 from utils import get_file_list
-
+from timesclaedb_adapter import get_database_info
 
 # Streamlit App
 st.set_page_config(
@@ -24,10 +24,11 @@ def local_css(file_name):
 local_css("style.css")
 
 # Statistics
+num_tables, num_rows, db_size = get_database_info()
 table_scorecard = """
 <div class="ui four small statistics">
 <div class="grey statistic">
-    <div class="value">"""+"4"+"""
+    <div class="value">"""+str(num_tables)+"""
     </div>
     <div class="grey label">
     Tables
@@ -35,7 +36,7 @@ table_scorecard = """
 </div>
 
 <div class="grey statistic">
-    <div class="value">"""+"3474"+"""
+    <div class="value">"""+str(num_rows)+"""
     </div>
     <div class="label">
     Rows
@@ -47,20 +48,29 @@ table_scorecard = """
     """+"2"+"""
     </div>
     <div class="label">
-    Data Collecting Scripts
+    Data Storing Scripts
     </div>
 </div>
 
 <div class="grey statistic">
     <div class="value">
-    """+"10 MB"+"""
+    """+str(db_size)+"""
     </div>
     <div class="label">
-    Stored Data Size
+    Database Size
     </div>
 </div>
 </div>"""
-table_scorecard += """<br><br>"""
+table_scorecard += """<br><br><br>"""
 st.markdown(table_scorecard, unsafe_allow_html=True)
 
+st.markdown('###### Logs')
+with st.container(height=320):
+    tab1, tab2 = st.tabs(["Error", "Stored files"])
+with tab1:
+    with open('error_log.log', "r") as f:
+        st.write(f.read())
+with tab2:
+    with open('stored_files.log', "r") as f:
+        st.write(list(f))
 
