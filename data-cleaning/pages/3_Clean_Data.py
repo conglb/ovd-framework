@@ -34,7 +34,7 @@ def run_cleaning_script(script_name, raw_file_path, output_file_path):
 def show_dataframe(df):
     st.write("Number of columns: {}".format(len(df.columns)))
     st.write("Number of rows: {}".format(len(df)))
-    st.dataframe(df)
+    #st.dataframe(df)
 
 st.set_page_config(
         page_title="Data Cleaning Module",
@@ -50,14 +50,14 @@ st.markdown("##### 1. [Data Collection Module](http://localhost:8511) &emsp; &em
 
 
 # Lấy danh sách các file dữ liệu
-st.sidebar.header("Clean data")
+st.sidebar.header("Select Data Files and Cleaning Script")
 
 folder_list = get_folder_list(RAW_FILES_DIR)
-selected_folder = st.sidebar.selectbox("Choose a folder", folder_list)
+selected_folder = st.sidebar.selectbox("Choose a data folder", folder_list)
 if selected_folder:
     file_list = get_file_list(os.path.join(RAW_FILES_DIR, selected_folder))
     if file_list:
-        selected_files = st.sidebar.multiselect("Choose a file to clean", file_list)
+        selected_files = st.sidebar.multiselect("Choose files to clean", file_list)
         script_list = get_cleaning_scripts()
         selected_script = st.sidebar.selectbox("Choose a cleaning script", script_list)
 
@@ -65,15 +65,17 @@ if selected_folder:
             st.markdown('#### Raw data')
             if len(selected_files) == 1:
                 raw_file_path = [os.path.join(RAW_FILES_DIR, selected_folder, selected_file) for selected_file in selected_files ]
-                df = pd.read_csv(raw_file_path[0])
-                show_dataframe(df)
+                st.write("W1: this feature is disabled")
+                #df = pd.read_csv(raw_file_path[0])
+                #show_dataframe(df)
             else:
                 raw_file_path = [os.path.join(RAW_FILES_DIR, selected_folder, selected_file) for selected_file in selected_files ]
                 tabs = st.tabs(selected_files)
                 for index, tab in enumerate(tabs):
                     with tab:
-                        df = pd.read_csv(raw_file_path[index])
-                        show_dataframe(df)
+                        st.write("W2: this feature is disabled")
+                        #df = pd.read_csv(raw_file_path[index])
+                        #show_dataframe(df)
 
 
         # Biến để lưu trạng thái xử lý

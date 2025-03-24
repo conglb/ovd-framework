@@ -17,5 +17,6 @@ if st.button("Add Source"):
     if name and url:
         add_data_source(name, data_category, url, description, file_format, collecting_script, collecting_frequency)
         st.success(f"Source '{name}' has been added successfully!")
+        st.already_started_server = False
     else:
         st.error("Please enter both a name and URL for the data source.")

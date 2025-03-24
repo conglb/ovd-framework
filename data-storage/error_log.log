@@ -3,3 +3,23 @@
 2025-02-04 09:17:07.437380 - sotring-to-timescaledb-aishub-in-batch.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-13_06.23.45.csv
 
 2025-02-10 12:20:22.596404 - storing-to-influxdb_script_2.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-13_07.29.40.csv
+2025-02-19 08:51:18.207121 - sotring-to-timescaledb-aishub-in-batch.py - ERROR: while store ../data/cleaned_files/DMA.dk/aisdk-2024-07-04.csv
+2025-02-19 10:06:15.146815 - sotring-to-timescaledb-aishub-in-batch.py - ERROR: while store ../data/cleaned_files/DMA.dk/aisdk-2024-07-04.csv
+2025-02-19 10:06:34.623774 - sotring-to-timescaledb-dmk.dk-in-batch.py - ERROR: while store ../data/cleaned_files/DMA.dk/aisdk-2024-07-04.csv
+2025-02-21 17:04:34.526677 - sotring-to-timescaledb-aishub-in-batch.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-02-07_13.04.42.csv
+2025-02-24 22:26:11.819052 - storing-to-influxdb_script_2.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-13_02.20.56.csv
+2025-02-27 09:08:49.646548 - storing-to-influxdb.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-13_07.29.40.csv
+2025-02-27 09:11:37.146715 - storing-to-influxdb.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-13_07.29.40.csv
+2025-02-27 09:13:44.601503 - storing-to-influxdb_script_2.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-12_18.40.21.csv
+2025-02-27 09:20:55.127171 - storing-to-influxdb_script_2.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-12_15.59.14.csv
+2025-02-27 09:21:13.639813 - storing-to-influxdb.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-12_15.59.14.csv
+2025-02-27 09:22:43.541317 - storing-to-influxdb_script_2.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-12_13.58.45.csv
+2025-02-27 09:22:47.272070 - storing-to-influxdb.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-12_13.58.45.csv
+2025-02-27 09:23:25.454434 - storing-to-influxdb.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-12_13.58.45.csv
+2025-02-27 09:23:26.892992 - storing-to-influxdb.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-12_13.58.45.csv
+2025-02-27 09:23:28.571908 - storing-to-influxdb.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-12_13.58.45.csv
+2025-02-27 09:23:34.268123 - storing-to-influxdb_script_2.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-13_07.29.40.csv
+2025-02-27 09:27:36.025701 - storing-to-influxdb_script_2.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-13_07.29.40.csv
+2025-02-27 09:28:39.836441 - storing-to-influxdb_script_2.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-13_07.29.40.csv
+2025-02-27 09:28:41.543552 - storing-to-influxdb_script_2.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-13_07.29.40.csv
+2025-02-27 09:29:01.376646 - storing-to-influxdb_script_2.py - ERROR: while store ../data/cleaned_files/aishub.com/cleaned_aishub-2025-01-13_07.29.40.csv

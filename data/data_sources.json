@@ -6,12 +6,33 @@
         "description": "",
         "file_format": "CSV",
         "collecting_script": "aishub.com.sh",
-        "collecting_frequency": "Hourly",
-        "last_collected_time": "not collected",
-        "when_created": "\"2025-01-07 16:53:50\"",
         "collecting_frequency": "Every 20 minutes",
         "last_collected_time": "2024-12-15 16:02:01",
         "when_created": "2024-12-14 12:19:49",
+        "status": "active"
+    },
+    {
+        "name": "DMA.dk",
+        "data_category": "AIS data",
+        "url": "http://web.ais.dk/aisdata/",
+        "description": "AIS data in coverage of Denmark",
+        "file_format": "CSV",
+        "collecting_script": "dmk.dk.py",
+        "collecting_frequency": "Once",
+        "last_collected_time": "not collected",
+        "when_created": "\"2025-02-11 08:36:54\"",
+        "status": "active"
+    },
+    {
+        "name": "dma",
+        "data_category": "AIS data",
+        "url": "ais.dma.dk",
+        "description": "collect 03.2025",
+        "file_format": "CSV",
+        "collecting_script": "teamplate.py",
+        "collecting_frequency": "Monthly",
+        "last_collected_time": "not collected",
+        "when_created": "\"2025-03-02 14:07:02\"",
         "status": "active"
     }
 ]

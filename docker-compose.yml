@@ -48,6 +48,21 @@ services:
       - ./data:/data  # Mount the shared volume
       - ./data-cleaning:/app # Mount source code
     tty: true
+  
+  data_presentation:
+    image: data-presentation-image:latest
+    container_name: data-presentation
+    build:
+      context: ./data-presentation
+    ports:
+      - "8514:8514"   # Map cổng cho Streamlit
+      - "8014:8014"   # Map cổng cho Flask
+    networks:
+      - app-network
+    volumes:
+      - ./data:/data  # Mount the shared volume
+      - ./data-presentation:/app # Mount source code
+    tty: true
 
   data_storage:
     image: data-storage-image:latest
@@ -67,22 +82,6 @@ services:
       - ./data:/data  # Mount the shared volume
       - ./data-storage:/app # Mount source code
     tty: true
-
-  data_presentation:
-    image: data-presentation-image:latest
-    container_name: data-presentation
-    build:
-      context: ./data-presentation
-    ports:
-      - "8514:8514"   # Map cổng cho Streamlit
-      - "8014:8014"   # Map cổng cho Flask
-    networks:
-      - app-network
-    volumes:
-      - ./data:/data  # Mount the shared volume
-      - ./data-presentation:/app # Mount source code
-    tty: true
-  
 
 networks:
   app-network:

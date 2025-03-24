@@ -111,8 +111,9 @@ def schedule_tasks():
         elif collecting_frequency == "Daily":
             schedule.every().day.at(schedule_time).do(run_task, task_name=task_name, script_url=script_url)
         elif collecting_frequency == "Weekly":
-            schedule.every().week.at(schedule_time).do(run_task, task_name=task_name, script_url=script_url)
-        
+            schedule.every().week.do(run_task, task_name=task_name, script_url=script_url)
+        elif collecting_frequency == "Once":
+            run_task(task_name, script_url)
     
     #schedule.every().hour.at(":49").do(task_2)  # Chạy Task 2 vào 20 phút
     #schedule.every().hour.at(":40").do(task_3)  # Chạy Task 3 vào 40 phút

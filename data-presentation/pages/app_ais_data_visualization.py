@@ -18,7 +18,7 @@ def log_performance(file_size, time_spent):
 def query_ais_data(start_date, end_date):
     query = """
         SELECT * FROM ais_data
-        WHERE date_part('year', timestamp) = 2025 
+        WHERE date_part('year', timestamp) = 2025
     """
     cursor.execute(query)
     data = cursor.fetchall()
@@ -40,7 +40,7 @@ if start_date > end_date:
     st.sidebar.error("End Date must fall after Start Date")
 
 # Retrieve data from InfluxDB
-if st.sidebar.button("Retrieve AIS Data"):
+if st.sidebar.button("Retrieve AIS Data from TimesclaeDB"):
     with st.spinner("Retrieving data..."):
         try:
             start_time = time.time()

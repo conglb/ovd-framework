@@ -7,11 +7,9 @@ import zipfile
 from bs4 import BeautifulSoup
 import re
 
-# Base URL of the data repository
 BASE_URL = "http://web.ais.dk/aisdata/"
 
-# Directory to save downloaded files
-DOWNLOAD_DIR = "./data/DMA.dk"
+DOWNLOAD_DIR = "./data/raw_files/DMA.dk"
 
 FILE_NAME_PATTERN = r"aisdk-(\d{4})-(\d{2})-(\d{2}).zip"
 

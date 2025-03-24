@@ -12,4 +12,28 @@ timescaledb-1        | 2024-12-17 16:01:22.722 UTC [38] HINT:  The most up-to-da
 
 timescaledb-1        | 2024-12-17 16:01:22.797 UTC [37] LOG:  the "timescaledb" extension is not up-to-date
 s
-timescaledb-1        | 2024-12-17 16:01:22.797 UTC [37] HINT:  The most up-to-date version is 2.17.2, the installed version is 2.17.1.
+timescaledb-1        | 2024-12-17 16:01:22.797 UTC [37] HINT:  The most up-to-date version is 2.17.2, the installed version is 2.17.1.2025-02-11 14:04:21.063541 - DMA.dk - ERROR: Traceback (most recent call last):
+  File "/app/./collecting_scripts/dmk.dk.py", line 7, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+
+2025-02-14 09:08:44.774977 - DMA.dk - ERROR: Traceback (most recent call last):
+  File "/app/./collecting_scripts/dmk.dk.py", line 7, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+
+2025-02-27 08:05:39.681395 - DMA.dk - ERROR: Traceback (most recent call last):
+  File "/app/./collecting_scripts/dmk.dk.py", line 7, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+
+2025-03-02 11:55:30.264208 - DMA.dk - ERROR: Traceback (most recent call last):
+  File "/app/./collecting_scripts/dmk.dk.py", line 7, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+
+2025-03-02 14:25:14.346777 - DMA.dk - ERROR: Traceback (most recent call last):
+  File "/app/./collecting_scripts/dmk.dk.py", line 7, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+

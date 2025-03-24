@@ -17,7 +17,7 @@ write_api = client.write_api(write_options=SYNCHRONOUS)
 
 # Prepare the data
 # Đường dẫn tệp CSV
-CSV_FILE_PATH = "./Raw_Data/DMA.dk/aisdk-2024-07-01.csv"
+CSV_FILE_PATH = "/data/raw_files/aishub.com/aishub-2025-01-12_12.37.12.csv"
 
 def write_chunk_to_influxdb(df_chunk):
     # Structure #

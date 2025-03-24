@@ -31,7 +31,7 @@ os.makedirs(CLEANED_FILES_DIR, exist_ok=True)
 def show_dataframe(df):
     st.write("Number of columns: {}".format(len(df.columns)))
     st.write("Number of rows: {}".format(len(df)))
-    st.dataframe(df)
+    #st.dataframe(df)
 
 def log_store(file_path):
     with open('./stored_files.log', "a") as f:
@@ -59,26 +59,28 @@ def run_storing_script(script_name, cleaned_file_path):
         return e.stderr
 
 # Lấy danh sách các file dữ liệu
-st.sidebar.header("Select a File and Storing Script")
+st.sidebar.header("Select Data Files and Storing Script")
 folder_list = get_folder_list(CLEANED_FILES_DIR)
-selected_folder = st.sidebar.selectbox("Choose a folder", folder_list)
+selected_folder = st.sidebar.selectbox("Choose a data folder", folder_list)
 
 # Hiển thị danh sách file để người dùng chọn
 if folder_list:
     file_list = get_file_list(join(CLEANED_FILES_DIR, selected_folder))
-    selected_files = st.sidebar.multiselect("Choose a file to store", file_list)
+    selected_files = st.sidebar.multiselect("Choose files to store", file_list)
 
     if len(selected_files) == 1:
         cleaned_file_path = [os.path.join(CLEANED_FILES_DIR, selected_folder, selected_file) for selected_file in selected_files ]
-        df = pd.read_csv(cleaned_file_path[0])
-        show_dataframe(df)
+        st.write("W12: this feature is disabled")
+        #df = pd.read_csv(cleaned_file_path[0])
+        #show_dataframe(df)
     elif len(selected_files) > 1:
         cleaned_file_path = [os.path.join(CLEANED_FILES_DIR, selected_folder, selected_file) for selected_file in selected_files ]
         tabs = st.tabs(selected_files)
         for index, tab in enumerate(tabs):
             with tab:
-                df = pd.read_csv(cleaned_file_path[index])
-                show_dataframe(df)
+                st.write("W11: this feature is disabled")
+                #df = pd.read_csv(cleaned_file_path[index])
+                #show_dataframe(df)
 
     # Lấy danh sách các script làm sạch
     script_list = get_storing_scripts()

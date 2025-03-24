@@ -17,21 +17,20 @@ def storing(input_filename):
 
     def write_chunk_to_influxdb(df_chunk):
         # convert timestamp string to timstamp unix
-        df_chunk['Timestamp'] = pd.to_datetime(df_chunk['Timestamp'], format='%d/%m/%Y %H:%M:%S') 
+        df_chunk['timestamp'] = pd.to_datetime(df_chunk['timestamp'], format='%Y-%m-%d %H:%M:%S') 
         points = []
         for _, row in df_chunk.iterrows():
             point = Point("test1")
             for column in df_chunk.columns: 
                 if row[column] and row[column] not in ['Unknown', 'Undefined']:
-                    if column == "Timestamp":
+                    if column == "timestamp":
                         point = point.time(row[column], write_precision='s')
-                    elif column == 'IMO' and row[column]:
-                        point = point.tag("IMO", row[column])
-                    elif column == 'MMSI' and row[column]:
-                        point = point.tag("MMSI", row[column])
+                    elif column == 'imo' and row[column]:
+                        point = point.tag("imo", row[column])
+                    elif column == 'mmsi' and row[column]:
+                        point = point.tag("mmsi", row[column])
                     else:
                         point = point.field(column, row[column])
-            print(point)
             points.append(point)
         write_api.write(bucket=INFLUXDB_BUCKET, org=INFLUXDB_ORG, record=points)
         print(f"Written {len(points)} points to InfluxDB")

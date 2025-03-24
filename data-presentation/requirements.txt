@@ -1,0 +1,12 @@
+streamlit 
+pandas 
+requests 
+flask 
+streamlit_monaco 
+psycopg2 
+plotly
+geopandas
+scikit-learn
+yellowbrick
+numpy
+dcor
